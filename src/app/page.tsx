@@ -1,95 +1,87 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+import { Box, Typography } from "@mui/material";
+import {
+  BackgroundColor,
+  BorderColor,
+  BorderColorTransparent,
+  ForegroundColor,
+  SecondaryBackgroundColor,
+} from "./appThemeProvider";
+import CellText from "@/cell/cellText";
+import { useState } from "react";
 
 export default function Home() {
+  const [text, setText] = useState("JUSTIN GU");
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Backspace" || event.key === "Delete") {
+      setText(text.slice(0, -1));
+    } else if (text.length < 10 && event.key.length === 1) {
+      // capitalize
+      setText(text + event.key.toUpperCase());
+    }
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <Box
+      height="100vh"
+      width="100vw"
+      style={{
+        background: BackgroundColor,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      onKeyDown={handleKeyPress}
+      tabIndex={0}
+    >
+      <Box
+        sx={containerStyle}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Box sx={innerContainerStyle}>
+          <CellText text={text} />
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+        </Box>
+      </Box>
+    </Box>
+  );
 }
+
+const nmInsetStyleBackground = {
+  boxShadow: "inset 5px 5px 5px #cecece, inset -5px -5px 5px #f2f2f2",
+};
+
+const nmInsetStyleSecondaryBackground = {
+  boxShadow: "inset 5px 5px 5px #9fa299, inset -5px -5px 5px #bbbeb3",
+};
+
+const containerStyle = {
+  ...nmInsetStyleBackground,
+  borderRadius: 10,
+  height: "200px",
+  width: "1000px",
+  background: ForegroundColor,
+};
+
+
+const innerContainerStyle = {
+  ...nmInsetStyleSecondaryBackground,
+  borderRadius: 8,
+  height: "calc(100% - 18px)",
+  width: "calc(100% - 18px)",
+  background: SecondaryBackgroundColor,
+  border: `2px solid ${BorderColor}`,
+  
+  // backgroundSize: "40px 40px",
+  // backgroundImage:
+  //   `linear-gradient(to right, ${BorderColorTransparent} 1px, transparent 1px), linear-gradient(to bottom, ${BorderColorTransparent} 1px, transparent 1px)`,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+};
+
+
+
